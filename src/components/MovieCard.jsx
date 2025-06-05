@@ -1,3 +1,5 @@
+import '../css/MovieCard.css'
+
 const MovieCard = ({ movie }) => {
 
     const onFavoriteClick = () => {
@@ -6,7 +8,7 @@ const MovieCard = ({ movie }) => {
     return (
         <div className="movie-card">
             <div className="movie-poster">
-                <img src={movie.url} alt={movie.title} loading="lazy" />
+                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} loading="lazy" />
                 <div className="movie-overlay">
                     <button className="favorite-btn" onClick={onFavoriteClick}>🤍</button>
                 </div>
