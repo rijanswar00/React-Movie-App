@@ -1,0 +1,29 @@
+import MovieCard from "../components/MovieCard"
+
+const Home = () => {
+
+    const movies = [
+        { id: 1, title: "Joh Wick", release_date: "2020" },
+        { id: 2, title: "Terminator", release_date: "1999" },
+        { id: 3, title: "The Matrix", release_date: "1998" },
+    ]
+
+    const handleSearch = () => {
+
+    }
+    return (
+        <div className="home">
+            <form onSubmit={handleSearch} className="search-form">
+                <input type="text" placeholder="Search for movies..." className="search-input" />
+                <button type="submit" className="search-button">Search</button>
+            </form>
+            <div className="movies-grid">
+                {movies.map((movie, index) => (
+                    <MovieCard movie={movie} key={index} />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export default Home
