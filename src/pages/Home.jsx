@@ -12,14 +12,14 @@ const Home = () => {
 
     useEffect(() => {
         const loadPopularMovies = async () => {
-            try{
+            try {
                 const popularMovies = await getPopularMovies();
                 setMovies(popularMovies);
                 console.log(popularMovies)
-            } catch(err){
+            } catch (err) {
                 console.log(err);
                 setError("Faild to load movies...")
-            } finally{
+            } finally {
                 setLoading(false);
             }
         }
@@ -27,9 +27,23 @@ const Home = () => {
         loadPopularMovies();
     }, [])
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
-        alert(searchQuery);
+        if (!searchQuery.trim()) return
+        if (loading) return
+
+        setLoading(true);
+
+        try {
+            const searchResult = await searchMovies(searchQuery);
+            setMovies(searchResult);
+            setError(null);
+        } catch {
+            setError("Failed to search movies...")
+        } finally {
+            setLoading(false);
+        }
+
     }
     return (
         <div className="home">
@@ -42,11 +56,18 @@ const Home = () => {
                     onChange={(e) => { setSearchQuery(e.target.value) }} />
                 <button type="submit" className="search-button" >Search</button>
             </form>
-            <div className="movies-grid">
-                {movies.map((movie, index) => (
-                    <MovieCard movie={movie} key={index} />
-                ))}
-            </div>
+
+            {error && <div className="error-message">{error}</div>}
+
+            {loading ? (
+                <div className="loading">Loading...</div>
+            ) : (
+                <div className="movies-grid">
+                    {movies.map((movie, index) => (
+                        <MovieCard movie={movie} key={index} />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
