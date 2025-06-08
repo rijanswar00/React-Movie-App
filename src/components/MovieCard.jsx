@@ -8,6 +8,7 @@ const MovieCard = ({ movie }) => {
         e.preventDefault();
         if(favorite) removeFromFavorites(movie.id);
         else addToFavorites(movie); 
+        console.log("clicked btn")
     }
     return (
         <div className="movie-card">
